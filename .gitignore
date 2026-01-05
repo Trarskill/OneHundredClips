@@ -1,0 +1,8 @@
+save/
+data.json
+
+.idea
+
+.vscode/
+
+__pycache__/
