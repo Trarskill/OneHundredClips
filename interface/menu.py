@@ -1,5 +1,7 @@
 import tkinter as tk
 
+BG_COLOR = "#dddddd"
+
 def create_hamburger_button(root, menu_widget):
     def show_menu():
         try:
@@ -14,9 +16,9 @@ def create_hamburger_button(root, menu_widget):
         root,
         text="≡",
         font=("Arial", 20, "bold"),
-        bg="#b3b3b3",
+        bg=BG_COLOR,
         bd=0,
-        activebackground="#d9d9d9",
+        activebackground="#ffffff",
         cursor="hand2",
         command=show_menu
     )
