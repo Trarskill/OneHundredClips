@@ -1,6 +1,9 @@
+# Автозбереження та оптимізація збереження даних
 save/
 data.json
+settings.json
 
+# Ігнорування IDE та тимчасових файлів
 .idea
 .vscode/
 __pycache__/

@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime
+import tkinter.messagebox as messagebox
 
 DATA_FILE = "data.json"
 SAVE_FOLDER = "save"
@@ -17,6 +18,20 @@ def load_data():
                 data.get("sub_counts", [{}, {}, {}]) 
             )
     except (json.JSONDecodeError, IOError):
+        now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+        corrupted_name = f"data_corrupted_{now_str}.json"
+        
+        try:
+            os.rename(DATA_FILE, corrupted_name)
+            messagebox.showerror(
+                "Помилка читання даних",
+                f"Файл {DATA_FILE} було пошкоджено!\n\n"
+                f"Щоб не втратити дані, його перейменовано на:\n{corrupted_name}\n\n"
+                f"Програму запущено з нульовими лічильниками."
+            )
+        except Exception as e:
+            messagebox.showerror("Помилка", f"Файл пошкоджено, і його не вдалося перейменувати: {e}")
+
         return [0, 0, 0], 0, [{}, {}, {}]
 
 def save_data(counts, all_count, sub_counts):
