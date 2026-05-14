@@ -2,20 +2,30 @@ import json
 import os
 from datetime import datetime
 import tkinter.messagebox as messagebox
+import config
 
 DATA_FILE = "data.json"
 SAVE_FOLDER = "save"
 
 def load_data():
     if not os.path.exists(DATA_FILE):
-        return [0, 0, 0], 0, [{}, {}, {}] 
+        return [], 0, [] 
     try:
         with open(DATA_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
+            
+            raw_counts = data.get("counts", [])
+            parsed_counts = []
+            for item in raw_counts:
+                if isinstance(item, dict):
+                    parsed_counts.append(list(item.values())[0])
+                else:
+                    parsed_counts.append(item)
+                    
             return (
-                data.get("counts", [0, 0, 0]), 
+                parsed_counts, 
                 data.get("all_count", 0),
-                data.get("sub_counts", [{}, {}, {}]) 
+                data.get("sub_counts", []) 
             )
     except (json.JSONDecodeError, IOError):
         now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -32,11 +42,22 @@ def load_data():
         except Exception as e:
             messagebox.showerror("Помилка", f"Файл пошкоджено, і його не вдалося перейменувати: {e}")
 
-        return [0, 0, 0], 0, [{}, {}, {}]
+        return [], 0, []
+
+def get_formatted_counts(counts):
+    formatted_counts = []
+    for i, count in enumerate(counts):
+        if i < len(config.TEXTS):
+            name = config.TEXTS[i].split('/')[0].strip()
+        else:
+            name = f"Категорія {i+1}"
+            
+        formatted_counts.append({name: count})
+    return formatted_counts
 
 def save_data(counts, all_count, sub_counts):
     data = {
-        "counts": counts, 
+        "counts": get_formatted_counts(counts),
         "all_count": all_count,
         "sub_counts": sub_counts
     }
@@ -53,7 +74,7 @@ def save_daily_report(counts, all_count, sub_counts):
 
     data = {
         "created_at": now.strftime("%Y-%m-%d %H:%M:%S"),
-        "counts": counts,
+        "counts": get_formatted_counts(counts),
         "all_count": all_count,
         "details": sub_counts
     }

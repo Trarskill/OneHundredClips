@@ -1,29 +1,31 @@
 import tkinter.messagebox as messagebox
 import storage
 
-counts = [0, 0, 0]
+counts = []
 all_count = 0
-sub_counts = [{}, {}, {}]
+sub_counts = []
 
 ui_label_all = None
 ui_counter_labels = []
-root_window = None 
+root_window = None
+_autosave_started = False
 
 def init(label_all_widget, counter_labels_list, options_list, root_widget):
-    global ui_label_all, ui_counter_labels, counts, all_count, sub_counts, root_window
+    global ui_label_all, ui_counter_labels, counts, all_count, sub_counts, root_window, _autosave_started
     
     ui_label_all = label_all_widget
     ui_counter_labels = counter_labels_list
     root_window = root_widget
     
     loaded_counts, loaded_all, loaded_sub = storage.load_data()
-    all_count = loaded_all
     counts = loaded_counts
     
     if len(counts) > len(ui_counter_labels):
         counts = counts[:len(ui_counter_labels)]
     elif len(counts) < len(ui_counter_labels):
         counts.extend([0] * (len(ui_counter_labels) - len(counts)))
+        
+    all_count = sum(counts)
         
     sub_counts = []
     for i, opts in enumerate(options_list):
@@ -34,7 +36,10 @@ def init(label_all_widget, counter_labels_list, options_list, root_widget):
         sub_counts.append(current_dict)
         
     update_ui()
-    schedule_autosave() 
+    
+    if not _autosave_started:
+        schedule_autosave()
+        _autosave_started = True
 
 def schedule_autosave():
     if root_window:

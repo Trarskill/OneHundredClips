@@ -2,6 +2,7 @@ import tkinter as tk
 from interface.wrap_text import WrapText
 from interface import menu
 from interface.options_editor import open_options_editor
+from interface.criteria_editor import open_criteria_editor
 import app_logic
 import config
 
@@ -37,6 +38,55 @@ def update_button_texts():
             
         canvas.itemconfig(text_id, text=new_text)
 
+def rebuild_interface():
+    for widget in grid.winfo_children():
+        widget.destroy()
+    canvas_text_ids.clear()
+    counter_labels.clear()
+    
+    num_criteria = len(config.TEXTS)
+    
+    ideal_width = max(640, num_criteria * 310)
+    root.geometry(f"{ideal_width}x460")
+    root.minsize(num_criteria * 220, 360) 
+    
+
+    for c in range(5):
+        grid.columnconfigure(c, weight=0, uniform="")
+
+    for c in range(num_criteria):
+        grid.columnconfigure(c, weight=1, uniform="col")
+
+    # Створюємо кнопки заново
+    for i in range(num_criteria):
+        tk.Label(
+            grid, text=WrapText(config.TEXTS[i]),
+            font=("Times New Roman", 16, "bold"), 
+            bg=config.BG_COLOR, justify="center"
+        ).grid(row=0, column=i, sticky="nsew", padx=10)
+
+        # Кнопка (Canvas)
+        canvas = tk.Canvas(grid, bg=config.BG_COLOR, highlightthickness=0)
+        canvas.grid(row=1, column=i, sticky="nsew", padx=15, pady=10)
+
+        btn_id = rounded_rect(canvas, 0, 0, 0, 0, r=18, fill=config.COLORS[i], outline="", tags="btn_click")
+        
+        display_text = "Select ▼" if use_dropdown_var.get() and len(config.BUTTON_OPTIONS[i]) > 0 else "click"
+        text_id = canvas.create_text(0, 0, text=display_text, font=("Arial", 14, "bold"), 
+                                     fill=config.TEXT_COLORS[i], tags="btn_click")
+
+        canvas_text_ids.append((canvas, text_id))
+        canvas.bind("<Configure>", make_resize_handler(canvas, btn_id, text_id))
+        canvas.tag_bind("btn_click", "<Button-1>", lambda e, idx=i: handle_button_click(e, idx))
+
+        # Лічильник
+        lbl = tk.Label(grid, text="0", font=("Times New Roman", 28, "bold"), bg=config.BG_COLOR)
+        lbl.grid(row=2, column=i)
+        counter_labels.append(lbl)
+
+    # Переініціалізуємо логіку 
+    app_logic.init(label_all, counter_labels, config.BUTTON_OPTIONS, root)
+
 def rounded_rect(canvas, x1, y1, x2, y2, r, **kwargs):
     points = [
         x1+r, y1, x2-r, y1, x2, y1, x2, y1+r, x2, y2-r, x2, y2,
@@ -57,11 +107,16 @@ popup_menu.add_command(
     label="📝 Оновити список вибору", 
     command=lambda: open_options_editor(root, update_button_texts)
 )
-popup_menu.add_command(label="💾 SAVE in file", command=app_logic.on_save_report)
-popup_menu.add_command(label="🔄 Reset", command=app_logic.on_reset_request)
+
+popup_menu.add_command(
+    label="⚙️ Налаштування критеріїв", 
+    command=lambda: open_criteria_editor(root, rebuild_interface)
+)
+popup_menu.add_command(label="💾 Зберегти в файл", command=app_logic.on_save_report)
+popup_menu.add_command(label="🔄 Скинути лічильники", command=app_logic.on_reset_request)
 
 popup_menu.add_separator()
-popup_menu.add_command(label="❌ Exit", command=app_logic.on_closing)
+popup_menu.add_command(label="❌ Вийти", command=app_logic.on_closing)
 
 menu_btn = menu.create_hamburger_button(root, popup_menu)
 
@@ -69,10 +124,13 @@ menu_btn = menu.create_hamburger_button(root, popup_menu)
 
 counter_labels = []
 
+num_criteria = len(config.TEXTS)
+
 grid = tk.Frame(root, bg=config.BG_COLOR)
 grid.grid(row=1, column=0, sticky="nsew", padx=15, pady=(0, 20))
 
-for c in range(3): grid.columnconfigure(c, weight=1, uniform="col")
+for c in range(num_criteria): 
+    grid.columnconfigure(c, weight=1, uniform="col")
 
 grid.rowconfigure(0, minsize=95)
 grid.rowconfigure(1, weight=1, minsize=100)
@@ -124,53 +182,8 @@ def make_resize_handler(cvs, btn_id, text_id):
         
     return on_resize
 
-for i in range(3):
-    tk.Label(
-        grid, 
-        text=WrapText(config.TEXTS[i]),
-        font=("Times New Roman", 16, "bold"), 
-        bg=config.BG_COLOR, 
-        anchor="center", 
-        justify="center"
-    ).grid(row=0, column=i, sticky="nsew", padx=10)
-
-    # Малюємо красиві кнопки
-    canvas = tk.Canvas(grid, bg=config.BG_COLOR, highlightthickness=0)
-    canvas.grid(row=1, column=i, sticky="nsew", padx=15, pady=10)
-
-    # Малюємо красиві кнопки
-    btn_id = rounded_rect(
-        canvas, 10, 10, 170, 60,
-        r=18,
-        fill=config.COLORS[i],
-        outline="",
-        tags="btn_click"
-    )
-
-    # Визначаємо початковий текст
-    display_text = "Select ▼" if use_dropdown_var.get() and len(config.BUTTON_OPTIONS[i]) > 0 else "click"
-
-    text_id = canvas.create_text(
-        85, 35, 
-        text=display_text, 
-        font=("Arial", 14, "bold"), 
-        fill=config.TEXT_COLORS[i], 
-        tags="btn_click"
-    )
-
-    canvas_text_ids.append((canvas, text_id))
-
-    # Прив'язуємо подію зміни розміру Canvas до нашої функції
-    canvas.bind("<Configure>", make_resize_handler(canvas, btn_id, text_id))
-    canvas.tag_bind("btn_click", "<Button-1>", lambda e, idx=i: handle_button_click(e, idx))
-
-    # Лічильник
-    lbl = tk.Label(grid, text="0", font=("Times New Roman", 28, "bold"), bg=config.BG_COLOR)
-    lbl.grid(row=2, column=i)
-    counter_labels.append(lbl)
-
 # ----------------- ІНІЦІАЛІЗАЦІЯ -----------------
-app_logic.init(label_all, counter_labels, config.BUTTON_OPTIONS, root)
+rebuild_interface()
 
 root.protocol("WM_DELETE_WINDOW", app_logic.on_closing)
 

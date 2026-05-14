@@ -7,14 +7,15 @@ def open_options_editor(parent, on_save_callback):
     editor = tk.Toplevel(parent)
     editor.title("Редагування списків вибору")
     editor.configure(bg=config.BG_COLOR)
-    editor.geometry("750x380") 
+    editor.geometry("850x380")
     editor.minsize(600, 300)
     editor.grab_set()
-    editor.columnconfigure((0, 1, 2), weight=1)
+    num_criteria = len(config.TEXTS)
+    editor.columnconfigure(tuple(range(num_criteria)), weight=1)
 
     entries_by_col = [] 
 
-    for i in range(3):
+    for i in range(num_criteria):
         col_frame = tk.Frame(editor, bg=config.BG_COLOR)
         col_frame.grid(row=0, column=i, padx=15, pady=15, sticky="nsew")
 
@@ -39,7 +40,7 @@ def open_options_editor(parent, on_save_callback):
         entries_by_col.append(col_entries)
 
     def save_new_options():
-        for i in range(3):
+        for i in range(num_criteria):
             new_opts = []
             for ent in entries_by_col[i]:
                 val = ent.get().strip()
@@ -56,7 +57,7 @@ def open_options_editor(parent, on_save_callback):
         editor.destroy()
 
     btn_frame = tk.Frame(editor, bg=config.BG_COLOR)
-    btn_frame.grid(row=1, column=0, columnspan=3, pady=15, sticky="ew")
+    btn_frame.grid(row=1, column=0, columnspan=num_criteria, pady=15, sticky="ew")
     
     save_btn = tk.Button(
         btn_frame, 
