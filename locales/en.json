@@ -8,6 +8,7 @@
         "update_options": "📝 Update selection list",
         "criteria_settings": "⚙️ Criteria settings",
         "save_report": "💾 SAVE in file",
+        "history": "📜 View History",
         "reset": "🔄 Reset",
         "exit": "❌ Exit"
     },
@@ -32,6 +33,14 @@
         "error_max": "Maximum 5 criteria allowed.",
         "new_criteria": "New criteria",
         "reset_confirm": "Restore to default settings?"
+    },
+    "history_viewer": {
+        "title": "Report History",
+        "select_file": "Select a file to view:",
+        "no_files": "No reports created yet.",
+        "header_criteria": "Criteria",
+        "header_count": "Count",
+        "header_details": "Details (options)"
     },
     "messages": {
         "reset_title": "Reset",

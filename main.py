@@ -1,4 +1,5 @@
 import tkinter as tk
+from interface.history_viewer import open_history_viewer
 from interface.language_selector import open_language_selector
 from interface.wrap_text import WrapText
 from interface import menu
@@ -105,8 +106,9 @@ def rounded_rect(canvas, x1, y1, x2, y2, r, **kwargs):
 popup_menu = tk.Menu(root, tearoff=0, font=("Arial", 12))
 menu_btn = menu.create_hamburger_button(root, popup_menu)
 
+# Функція, яка буде наповнювати це меню актуальним текстом
 def build_menu():
-    popup_menu.delete(0, 'end')
+    popup_menu.delete(0, 'end') 
     
     popup_menu.add_command(
         label="🌐 Language / Мова / Idioma", 
@@ -130,6 +132,10 @@ def build_menu():
     popup_menu.add_command(
         label=config.get_text("menu.save_report"), 
         command=app_logic.on_save_report
+    )
+    popup_menu.add_command(
+        label=config.get_text("menu.history"), 
+        command=lambda: open_history_viewer(root)
     )
     popup_menu.add_command(
         label=config.get_text("menu.reset"), 

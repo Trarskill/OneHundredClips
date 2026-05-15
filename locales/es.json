@@ -8,6 +8,7 @@
         "update_options": "📝 Actualizar lista de selección",
         "criteria_settings": "⚙️ Configuración de criterios",
         "save_report": "💾 GUARDAR en archivo",
+        "history": "📜 Ver Historial",
         "reset": "🔄 Reiniciar",
         "exit": "❌ Salir"
     },
@@ -32,6 +33,14 @@
         "error_max": "Máximo de 5 criterios permitido.",
         "new_criteria": "Nuevo criterio",
         "reset_confirm": "¿Restaurar a la configuración predeterminada?"
+    },
+    "history_viewer": {
+        "title": "Historial de informes",
+        "select_file": "Seleccione un archivo para ver:",
+        "no_files": "Aún no se han creado informes.",
+        "header_criteria": "Criterio",
+        "header_count": "Cant.",
+        "header_details": "Detalles (opciones)"
     },
     "messages": {
         "reset_title": "Reiniciar",

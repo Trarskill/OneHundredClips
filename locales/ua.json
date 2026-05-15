@@ -8,6 +8,7 @@
         "update_options": "📝 Оновити список вибору",
         "criteria_settings": "⚙️ Налаштування критеріїв",
         "save_report": "💾 Зберегти у файл",
+        "history": "📜 Перегляд історії",
         "reset": "🔄 Скинути",
         "exit": "❌ Вихід"
     },
@@ -33,6 +34,14 @@
         "error_max": "Максимум 5 критеріїв.",
         "new_criteria": "Новий критерій",
         "reset_confirm": "Повернути до стандартних налаштувань?"
+    },
+    "history_viewer": {
+        "title": "Історія звітів",
+        "select_file": "Оберіть файл для перегляду:",
+        "no_files": "Звітів ще не створено.",
+        "header_criteria": "Критерій",
+        "header_count": "К-сть",
+        "header_details": "Деталі (опції)"
     },
     "messages": {
         "reset_title": "Скидання",

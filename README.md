@@ -48,7 +48,7 @@ Make sure you have Python 3.12+ installed.
 2. [+] More detailed report with results of button presses and selected options.
 3. [+] Creating a custom selection from the list for the button within the app + saving to a JSON file.
 4. [+] Editing the criteria text (adding custom criteria) within the app + saving to a JSON file.
-5. [ ] Load and view previous save files directly in the app.
+5. [+] Load and view previous save files directly in the app.
 6. [+] Add multiple UI languages (i18n).
 7. [ ] Other...
 

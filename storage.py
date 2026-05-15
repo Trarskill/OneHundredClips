@@ -84,3 +84,17 @@ def save_daily_report(counts, all_count, sub_counts):
         json.dump(data, f, indent=4, ensure_ascii=False)
         
     return full_path
+
+def get_all_reports():
+    if not os.path.exists(SAVE_FOLDER):
+        return []
+    files = [f for f in os.listdir(SAVE_FOLDER) if f.startswith("save_") and f.endswith(".json")]
+    return sorted(files, reverse=True)
+
+def load_report_file(filename):
+    full_path = os.path.join(SAVE_FOLDER, filename)
+    try:
+        with open(full_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None

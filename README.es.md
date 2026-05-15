@@ -47,7 +47,7 @@ Asegúrate de tener instalado Python 3.12+.
 2. [+] Informe más detallado con los resultados de las pulsaciones de botones y opciones seleccionadas.
 3. [+] Creación de una selección personalizada desde la lista para el botón dentro de la aplicación + guardar en un archivo JSON.
 4. [+] Edición del texto de los criterios (añadir criterios propios) en la propia aplicación + guardar en un archivo JSON.
-5. [ ] Cargar y ver archivos de guardado anteriores directamente en la aplicación.
+5. [+] Cargar y ver archivos de guardado anteriores directamente en la aplicación.
 6. [+] Añadir diferentes idiomas de interfaz (i18n).
 7. [ ] Otros...
 
