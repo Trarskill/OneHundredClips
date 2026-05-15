@@ -5,7 +5,7 @@ import app_logic
 
 def open_criteria_editor(parent, on_refresh_callback):
     editor = tk.Toplevel(parent)
-    editor.title("Налаштування критеріїв")
+    editor.title(config.get_text("criteria_editor.title"))
     editor.configure(bg=config.BG_COLOR)
     editor.geometry("550x500")
     editor.grab_set()
@@ -15,10 +15,8 @@ def open_criteria_editor(parent, on_refresh_callback):
 
     def show_info():
         messagebox.showinfo(
-            "Довідка по символах",
-            "Правила форматування тексту критерію:\n\n"
-            "• Символ  /  — це візуальний розділювач, використовується для зрічності чітання тексту.\n"
-            "• Символ  >  — це прихований маркер переносу рядка. Він не відображається в інтерфейсі, але змушує текст після нього перенестися вниз."
+            config.get_text("criteria_editor.info_title"),
+            config.get_text("criteria_editor.info_text")
         )
 
     info_btn = tk.Button(
@@ -29,7 +27,7 @@ def open_criteria_editor(parent, on_refresh_callback):
     info_btn.pack(side="right")
     
     tk.Label(
-        info_frame, text="Список поточних критеріїв:", 
+        info_frame, text=config.get_text("criteria_editor.list_label"), 
         font=("Arial", 11, "bold"), bg=config.BG_COLOR
     ).pack(side="left")
 
@@ -46,7 +44,7 @@ def open_criteria_editor(parent, on_refresh_callback):
 
     def delete_item(idx):
         if len(temp_texts) <= 2:
-            messagebox.showwarning("Увага", "Має бути хоча б 2 критерії.")
+            messagebox.showwarning(config.get_text("messages.err_title"), config.get_text("criteria_editor.error_min"))
             return
         temp_texts.pop(idx)
         temp_colors.pop(idx)
@@ -56,10 +54,10 @@ def open_criteria_editor(parent, on_refresh_callback):
 
     def add_item():
         if len(temp_texts) >= 5:
-            messagebox.showwarning("Ліміт", "Максимум 5 критеріїв.")
+            messagebox.showwarning(config.get_text("messages.err_title"), config.get_text("criteria_editor.error_max"))
             return
-        temp_texts.append("Новий критерій")
-        temp_colors.append("#888888") # Сірий за замовчуванням
+        temp_texts.append(config.get_text("criteria_editor.new_criteria"))
+        temp_colors.append("#888888")
         temp_t_colors.append("white")
         temp_options.append([])
         draw_list()
@@ -90,7 +88,7 @@ def open_criteria_editor(parent, on_refresh_callback):
     list_frame = tk.Frame(editor, bg=config.BG_COLOR)
     list_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-    add_btn = tk.Button(editor, text="+ Додати новий критерій", command=add_item, font=("Arial", 10, "bold"))
+    add_btn = tk.Button(editor, text=config.get_text("criteria_editor.add_btn"), command=add_item, font=("Arial", 10, "bold"))
     add_btn.pack(pady=10)
 
     # Нижня панель
@@ -107,14 +105,14 @@ def open_criteria_editor(parent, on_refresh_callback):
         editor.destroy()
 
     def reset():
-        if messagebox.askyesno("Скидання", "Повернути до стандартних налаштувань?"):
+        if messagebox.askyesno(config.get_text("criteria_editor.reset_confirm")):
             config.reset_to_defaults()
             on_refresh_callback()
             editor.destroy()
 
-    tk.Button(bottom, text="Зберегти", bg="#4CAF50", fg="white", font=("Arial", 11, "bold"), 
+    tk.Button(bottom, text=config.get_text("criteria_editor.save_btn"), bg="#4CAF50", fg="white", font=("Arial", 11, "bold"), 
               command=save, padx=20).pack(side="left", padx=30)
-    tk.Button(bottom, text="Стандартні", bg="#555555", fg="white", font=("Arial", 11), 
+    tk.Button(bottom, text=config.get_text("criteria_editor.default_btn"), bg="#555555", fg="white", font=("Arial", 11), 
               command=reset, padx=20).pack(side="right", padx=30)
 
     draw_list()

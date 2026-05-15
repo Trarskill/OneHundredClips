@@ -1,0 +1,51 @@
+{
+    "window_title": "OneHundredClips v0.5",
+    "label_all": "total: ",
+    "btn_select": "Elegir ▼",
+    "btn_click": "clic",
+    "menu": {
+        "show_options": "🔠 Mostrar listas de selección",
+        "update_options": "📝 Actualizar lista de selección",
+        "criteria_settings": "⚙️ Configuración de criterios",
+        "save_report": "💾 GUARDAR en archivo",
+        "reset": "🔄 Reiniciar",
+        "exit": "❌ Salir"
+    },
+    "options_editor": {
+        "title": "Editar listas de selección",
+        "category": "Categoría",
+        "save_btn": "Guardar cambios"
+    },
+    "language_selector": {
+        "title": "Language / Мова / Idioma",
+        "warning": "¡El idioma del texto del usuario no cambiará!"
+    },
+    "criteria_editor": {
+        "title": "Configuración de criterios",
+        "list_label": "Lista de criterios actuales:",
+        "add_btn": "+ Añadir nuevo criterio",
+        "save_btn": "Guardar",
+        "default_btn": "Por defecto",
+        "info_title": "Ayuda de símbolos",
+        "info_text": "Reglas de formato:\n\n• El símbolo  /  es un separador visual.\n• El símbolo  >  es un marcador de salto de línea oculto. Obliga al texto que le sigue a pasar a la siguiente línea.",
+        "error_min": "Debe haber al menos 2 criterios.",
+        "error_max": "Máximo de 5 criterios permitido.",
+        "new_criteria": "Nuevo criterio",
+        "reset_confirm": "¿Restaurar a la configuración predeterminada?"
+    },
+    "messages": {
+        "reset_title": "Reiniciar",
+        "reset_confirm": "¿Estás seguro de que quieres reiniciar los contadores?",
+        "save_report_title": "Guardar en archivo",
+        "save_report_msg": "Datos guardados en el archivo:",
+        "reset_counters_msg": "¿Quieres reiniciar los contadores?",
+        "ok_btn": "OK",
+        "start_zero": "para empezar de cero.",
+        "cancel_btn": "Cancelar",
+        "cont_count": "para continuar contando.",
+        "err_title": "Error",
+        "err_read_title": "Error de lectura de datos",
+        "err_read_text": "¡El archivo {file} estaba corrupto!\n\nPara evitar la pérdida de datos, ha sido renombrado a:\n{new_name}\n\nEl programa se ha iniciado con contadores a cero.",
+        "err_rename": "El archivo está corrupto y no se pudo renombrar: {error}"
+    }
+}

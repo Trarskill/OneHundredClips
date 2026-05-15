@@ -1,33 +1,56 @@
-# Analysis 100 TikTok 
+# OneHundredClips: Analysis 100 TikTok 
 
+<div align="center">
+  <a href="README.md">🇬🇧 English </a> | 
+  <a href="README.ua.md">🇺🇦 Українська</a> | 
+  <a href="README.es.md">🇪🇸 Español</a>
+</div>
 
-### 🖥️ Platform \ Пратформа:
+---
+
+### 🖥️ Platform:
 **PC - Windows**
 
 --- 
-### 🛠️ Tech Stack \ Технології: 
+
+### 🛠️ Tech Stack: 
 - **Python 3.12**
-- **Tkinter (GUI \ Графічний інтерфейс)**
-- **JSON (Data Persistence \ Збереження даних)**
+- **Tkinter ( Graphical User Interface / GUI )**
+- **JSON ( Data Persistence & Configuration )**
 
 --- 
-### 📘 Description \ Опис:
-Це проста програма для підрахунку оцінок пререглянутих відео за критеріями: 
-добре; нейтральне; погане\негативне.
 
-Загальною метою є: передивитися 100, або більше, TikTok-відео і розділити їх по критеріям,
-ця програма допоможе зробити аналіз простішим, за результатами можна підвести підсумок.
+### 📘 Description:
+This is a simple program for counting and analyzing viewed videos (for example, on TikTok, Reels, Shorts). 
+The overall goal is to watch 100 or more videos and categorize them:
+  - 🟢 Good / Useful
+  - 🟡 Neutral
+  - 🔴 Bad / Degraded
+
+This app helps make content consumption analysis simpler and more visual.
 
 --- 
-### 📈 Future improvements \ Майбутне вдосконалення:
 
-1. (+) Додання можливості вибору з переліку при натискані кнопки, та можливість вимкнення цієї функції 
-2. (+) Детальніший звіт-результат з результатом кількості натискань та вибораних з переліку опцій 
-3. (+) Створення власного вибору з переліку до кнопки в самій програмі + збереження в JSON файлі
-4. (+) Редагування тексту критерій(додати власний критерій) в самій програмі + збереження в JSON файлі
-5. Завантажувати та переглядати в програму попередні save файли
-6. Додання різних мов інтерфейсу
-7. Інше...
+### 🚀 How to run:
+
+Make sure you have Python 3.12+ installed.
+
+```bash
+  cd OneHundredClips
+  python main.py
+```
+
+--- 
+
+### 📈 Future Improvements:
+
+1. [+] Adding the ability to select from a list when pressing a button, and the option to disable this feature.
+2. [+] More detailed report with results of button presses and selected options.
+3. [+] Creating a custom selection from the list for the button within the app + saving to a JSON file.
+4. [+] Editing the criteria text (adding custom criteria) within the app + saving to a JSON file.
+5. [ ] Load and view previous save files directly in the app.
+6. [+] Add multiple UI languages (i18n).
+7. [ ] Other...
 
 --- 
 *(MY APP #2)*

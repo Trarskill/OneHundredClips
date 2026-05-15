@@ -1,4 +1,5 @@
 import tkinter as tk
+from interface.language_selector import open_language_selector
 from interface.wrap_text import WrapText
 from interface import menu
 from interface.options_editor import open_options_editor
@@ -8,7 +9,7 @@ import config
 
 # ----------------- вікно -----------------
 root = tk.Tk()
-root.title("OneHundredClips v0.4")
+root.title(config.get_text("window_title"))
 root.configure(bg=config.BG_COLOR)
 root.geometry("920x440")
 root.minsize(640, 360)
@@ -18,7 +19,7 @@ root.rowconfigure(0, weight=0)
 root.rowconfigure(1, weight=1)
 
 # ----------------- all -----------------
-label_all = tk.Label(root, text="all: 0", font=("Times New Roman", 32, "bold"), bg=config.BG_COLOR)
+label_all = tk.Label(root, text=f"{config.get_text('label_all')} 0", font=("Times New Roman", 32, "bold"), bg=config.BG_COLOR)
 label_all.grid(row=0, column=0, pady=(25, 15))
 
 use_dropdown_var = tk.BooleanVar(value=True)
@@ -32,13 +33,18 @@ def update_button_texts():
     
     for i, (canvas, text_id) in enumerate(canvas_text_ids):
         if is_active and len(config.BUTTON_OPTIONS[i]) > 0:
-            new_text = "Select ▼"
+            new_text = config.get_text("btn_select")
         else:
-            new_text = "click"
+            new_text = config.get_text("btn_click")
             
         canvas.itemconfig(text_id, text=new_text)
 
 def rebuild_interface():
+    root.title(config.get_text("window_title"))
+    label_all.config(text=f"{config.get_text('label_all')} {app_logic.all_count}")
+
+    build_menu()
+
     for widget in grid.winfo_children():
         widget.destroy()
     canvas_text_ids.clear()
@@ -71,7 +77,7 @@ def rebuild_interface():
 
         btn_id = rounded_rect(canvas, 0, 0, 0, 0, r=18, fill=config.COLORS[i], outline="", tags="btn_click")
         
-        display_text = "Select ▼" if use_dropdown_var.get() and len(config.BUTTON_OPTIONS[i]) > 0 else "click"
+        display_text = config.get_text("btn_select") if use_dropdown_var.get() and len(config.BUTTON_OPTIONS[i]) > 0 else config.get_text("btn_click")
         text_id = canvas.create_text(0, 0, text=display_text, font=("Arial", 14, "bold"), 
                                      fill=config.TEXT_COLORS[i], tags="btn_click")
 
@@ -97,28 +103,44 @@ def rounded_rect(canvas, x1, y1, x2, y2, r, **kwargs):
 # ----------------- меню -----------------
 
 popup_menu = tk.Menu(root, tearoff=0, font=("Arial", 12))
-
-popup_menu.add_checkbutton(
-    label="🔠 Показувати списки вибору", 
-    variable=use_dropdown_var, 
-    command=update_button_texts
-)
-popup_menu.add_command(
-    label="📝 Оновити список вибору", 
-    command=lambda: open_options_editor(root, update_button_texts)
-)
-
-popup_menu.add_command(
-    label="⚙️ Налаштування критеріїв", 
-    command=lambda: open_criteria_editor(root, rebuild_interface)
-)
-popup_menu.add_command(label="💾 Зберегти в файл", command=app_logic.on_save_report)
-popup_menu.add_command(label="🔄 Скинути лічильники", command=app_logic.on_reset_request)
-
-popup_menu.add_separator()
-popup_menu.add_command(label="❌ Вийти", command=app_logic.on_closing)
-
 menu_btn = menu.create_hamburger_button(root, popup_menu)
+
+def build_menu():
+    popup_menu.delete(0, 'end')
+    
+    popup_menu.add_command(
+        label="🌐 Language / Мова / Idioma", 
+        command=lambda: open_language_selector(root, rebuild_interface)
+    )
+    popup_menu.add_separator()
+
+    popup_menu.add_checkbutton(
+        label=config.get_text("menu.show_options"), 
+        variable=use_dropdown_var, 
+        command=update_button_texts
+    )
+    popup_menu.add_command(
+        label=config.get_text("menu.update_options"), 
+        command=lambda: open_options_editor(root, update_button_texts)
+    )
+    popup_menu.add_command(
+        label=config.get_text("menu.criteria_settings"), 
+        command=lambda: open_criteria_editor(root, rebuild_interface)
+    )
+    popup_menu.add_command(
+        label=config.get_text("menu.save_report"), 
+        command=app_logic.on_save_report
+    )
+    popup_menu.add_command(
+        label=config.get_text("menu.reset"), 
+        command=app_logic.on_reset_request
+    )
+
+    popup_menu.add_separator()
+    popup_menu.add_command(
+        label=config.get_text("menu.exit"), 
+        command=app_logic.on_closing
+    )
 
 # ----------------- Панель -----------------
 
@@ -183,7 +205,11 @@ def make_resize_handler(cvs, btn_id, text_id):
     return on_resize
 
 # ----------------- ІНІЦІАЛІЗАЦІЯ -----------------
-rebuild_interface()
+
+if not config.CURRENT_LANG:
+    open_language_selector(root, rebuild_interface)
+else:
+    rebuild_interface()
 
 root.protocol("WM_DELETE_WINDOW", app_logic.on_closing)
 

@@ -1,5 +1,6 @@
 import tkinter.messagebox as messagebox
 import storage
+import config
 
 counts = []
 all_count = 0
@@ -54,7 +55,7 @@ def on_closing():
 
 def update_ui():
     if ui_label_all:
-        ui_label_all.config(text=f"all: {all_count}")
+        ui_label_all.config(text=f"{config.get_text('label_all')} {all_count}")
     for i, lbl in enumerate(ui_counter_labels):
         lbl.config(text=str(counts[i]))
 
@@ -84,16 +85,19 @@ def perform_reset():
     storage.save_data(counts, all_count, sub_counts)
 
 def on_reset_request():
-    if messagebox.askyesno("Скидання", "Ви впевнені, що хочете обнулити лічильники?"):
+    if messagebox.askyesno(
+        config.get_text("messages.reset_title"), 
+        config.get_text("messages.reset_confirm")
+    ):
         perform_reset()
 
 def on_save_report():
     filename = storage.save_daily_report(counts, all_count, sub_counts)
     should_reset = messagebox.askokcancel(
-        "Save in file", 
-        f"Дані збережено у файл:\n{filename}\n\nБажаєте скинути лічильники?\n\n"
-        f"'ОК', щоб почати з нуля.\n"
-        f"'Cancel', щоб продовжити рахунок."
+        config.get_text('messages.save_report_title'),
+        f"{config.get_text('messages.save_report_msg')}\n{filename}\n\n{config.get_text('messages.reset_counters_msg')}\n\n"
+        f"'{config.get_text('messages.ok_btn')}', {config.get_text('messages.start_zero')}\n"
+        f"'{config.get_text('messages.cancel_btn')}', {config.get_text('messages.cont_count')}"
     )
 
     if should_reset:

@@ -5,7 +5,7 @@ import app_logic
 # Функція для відкриття вікна редагування опцій
 def open_options_editor(parent, on_save_callback):
     editor = tk.Toplevel(parent)
-    editor.title("Редагування списків вибору")
+    editor.title(config.get_text("options_editor.title"))
     editor.configure(bg=config.BG_COLOR)
     editor.geometry("850x380")
     editor.minsize(600, 300)
@@ -21,7 +21,7 @@ def open_options_editor(parent, on_save_callback):
 
         tk.Label(
             col_frame, 
-            text=f"Категорія {i+1}", 
+            text=f"{config.get_text('options_editor.category')} {i+1}", 
             bg=config.COLORS[i], 
             fg=config.TEXT_COLORS[i], 
             font=("Arial", 12, "bold")
@@ -61,7 +61,7 @@ def open_options_editor(parent, on_save_callback):
     
     save_btn = tk.Button(
         btn_frame, 
-        text="Зберегти зміни", 
+        text=config.get_text("options_editor.save_btn"), 
         command=save_new_options, 
         font=("Arial", 12, "bold"), 
         bg="#4CAF50", 

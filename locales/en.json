@@ -1,0 +1,51 @@
+{
+    "window_title": "OneHundredClips v0.5",
+    "label_all": "all: ",
+    "btn_select": "Select ▼",
+    "btn_click": "click",
+    "menu": {
+        "show_options": "🔠 Show selection lists",
+        "update_options": "📝 Update selection list",
+        "criteria_settings": "⚙️ Criteria settings",
+        "save_report": "💾 SAVE in file",
+        "reset": "🔄 Reset",
+        "exit": "❌ Exit"
+    },
+    "options_editor": {
+        "title": "Edit Selection Lists",
+        "category": "Category",
+        "save_btn": "Save changes"
+    },
+    "language_selector": {
+        "title": "Language / Мова / Idioma",
+        "warning": "User text language will not be changed!"
+    },
+    "criteria_editor": {
+        "title": "Criteria Settings",
+        "list_label": "Current criteria list:",
+        "add_btn": "+ Add new criteria",
+        "save_btn": "Save",
+        "default_btn": "Defaults",
+        "info_title": "Symbol Help",
+        "info_text": "Formatting rules:\n\n• The  /  symbol is a visual separator.\n• The  >  symbol is a hidden line break marker. It forces the text after it to wrap to the next line.",
+        "error_min": "There must be at least 2 criteria.",
+        "error_max": "Maximum 5 criteria allowed.",
+        "new_criteria": "New criteria",
+        "reset_confirm": "Restore to default settings?"
+    },
+    "messages": {
+        "reset_title": "Reset",
+        "reset_confirm": "Are you sure you want to reset the counters?",
+        "save_report_title": "Save to file",
+        "save_report_msg": "Data saved to file:",
+        "reset_counters_msg": "Would you like to reset counters?",
+        "ok_btn": "OK",
+        "start_zero": "to start from zero.",
+        "cancel_btn": "Cancel",
+        "cont_count": "to continue counting.",
+        "err_title": "Error",
+        "err_read_title": "Data Read Error",
+        "err_read_text": "The file {file} was corrupted!\n\nTo prevent data loss, it has been renamed to:\n{new_name}\n\nThe program has started with zero counters.",
+        "err_rename": "The file is corrupted and could not be renamed: {error}"
+    }
+}

@@ -34,13 +34,14 @@ def load_data():
         try:
             os.rename(DATA_FILE, corrupted_name)
             messagebox.showerror(
-                "Помилка читання даних",
-                f"Файл {DATA_FILE} було пошкоджено!\n\n"
-                f"Щоб не втратити дані, його перейменовано на:\n{corrupted_name}\n\n"
-                f"Програму запущено з нульовими лічильниками."
+                config.get_text("messages.err_read_title"),
+                config.get_text("messages.err_read_text").format(file=DATA_FILE, new_name=corrupted_name)
             )
         except Exception as e:
-            messagebox.showerror("Помилка", f"Файл пошкоджено, і його не вдалося перейменувати: {e}")
+            messagebox.showerror(
+                config.get_text("messages.err_title"), 
+                config.get_text("messages.err_rename").format(error=e)
+            )
 
         return [], 0, []
 
@@ -50,7 +51,7 @@ def get_formatted_counts(counts):
         if i < len(config.TEXTS):
             name = config.TEXTS[i].split('/')[0].strip()
         else:
-            name = f"Категорія {i+1}"
+            name = f"{config.get_text('options_editor.category')} {i+1}"
             
         formatted_counts.append({name: count})
     return formatted_counts
