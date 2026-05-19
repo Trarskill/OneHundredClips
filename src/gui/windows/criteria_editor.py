@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import colorchooser, messagebox
-import config
-import app_logic
+import src.config as config
+import src.app_logic as app_logic
 
 def open_criteria_editor(parent, on_refresh_callback):
     editor = tk.Toplevel(parent)
@@ -74,7 +74,6 @@ def open_criteria_editor(parent, on_refresh_callback):
             ent.insert(0, temp_texts[i])
             ent.pack(side="left", fill="x", expand=True, padx=5)
             
-            # Стрілочна функція для миттєвого оновлення тексту в temp_texts
             ent.bind("<KeyRelease>", lambda e, idx=i, entry=ent: temp_texts.__setitem__(idx, entry.get()))
 
             btn_color = tk.Button(row, bg=temp_colors[i], width=3, relief="flat", 
@@ -105,7 +104,10 @@ def open_criteria_editor(parent, on_refresh_callback):
         editor.destroy()
 
     def reset():
-        if messagebox.askyesno(config.get_text("criteria_editor.reset_confirm")):
+        if messagebox.askyesno(
+            config.get_text("messages.reset_title"), 
+            config.get_text("criteria_editor.reset_confirm")
+        ):
             config.reset_to_defaults()
             on_refresh_callback()
             editor.destroy()

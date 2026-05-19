@@ -1,6 +1,6 @@
 import tkinter.messagebox as messagebox
-import storage
-import config
+import src.storage as storage
+import src.config as config
 
 counts = []
 all_count = 0

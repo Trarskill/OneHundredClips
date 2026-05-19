@@ -1,6 +1,6 @@
 import tkinter as tk
-import config
-import app_logic
+import src.config as config
+import src.app_logic as app_logic
 
 # Функція для відкриття вікна редагування опцій
 def open_options_editor(parent, on_save_callback):

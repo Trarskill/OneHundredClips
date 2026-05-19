@@ -1,5 +1,5 @@
 import tkinter as tk
-import config 
+import src.config as config 
 
 def create_hamburger_button(root, menu_widget):
     def show_menu():

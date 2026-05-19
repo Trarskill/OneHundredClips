@@ -1,8 +1,14 @@
 import json
 import os
 
-SETTINGS_FILE = "settings.json"
-LOCALES_DIR = "locales"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+USER_DATA_DIR = os.path.join(BASE_DIR, "user_data")
+SETTINGS_FILE = os.path.join(USER_DATA_DIR, "settings.json")
+LOCALES_DIR = os.path.join(BASE_DIR, "locales")
+
+if not os.path.exists(USER_DATA_DIR):
+    os.makedirs(USER_DATA_DIR)
 
 CURRENT_LANG = None
 LANG_DATA = {}

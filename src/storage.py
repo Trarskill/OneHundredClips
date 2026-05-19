@@ -2,10 +2,10 @@ import json
 import os
 from datetime import datetime
 import tkinter.messagebox as messagebox
-import config
+from src import config
 
-DATA_FILE = "data.json"
-SAVE_FOLDER = "save"
+DATA_FILE = os.path.join(config.USER_DATA_DIR, "data.json")
+SAVE_FOLDER = os.path.join(config.USER_DATA_DIR, "save")
 
 def load_data():
     if not os.path.exists(DATA_FILE):

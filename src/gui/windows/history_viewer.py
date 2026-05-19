@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-import config
-import storage
+import src.config as config
+import src.storage as storage
 
 def open_history_viewer(parent):
     viewer = tk.Toplevel(parent)

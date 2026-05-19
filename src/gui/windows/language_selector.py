@@ -1,10 +1,21 @@
 import tkinter as tk
-import config
+import src.config as config
 
 def open_language_selector(parent, on_change_callback):
     selector = tk.Toplevel(parent)
     selector.title("Language / Мова / Idioma")
-    selector.geometry("360x230")
+    
+    window_width = 360
+    window_height = 230
+    
+    x = parent.winfo_pointerx()
+    y = parent.winfo_pointery()
+    
+    pos_x = x - (window_width // 2)
+    pos_y = y - (window_height // 2)
+
+    selector.geometry(f"{window_width}x{window_height}+{pos_x}+{pos_y}")
+
     selector.configure(bg=config.BG_COLOR)
 
     selector.transient(parent)             
@@ -21,8 +32,8 @@ def open_language_selector(parent, on_change_callback):
     selector.grab_set()
 
     languages = [
-        ("🇺🇦 Українська", "ua"),
         ("🇬🇧 English", "en"),
+        ("🇺🇦 Українська", "ua"),
         ("🇪🇸 Español", "es")
     ]
 
